@@ -1,4 +1,4 @@
-const Address = require('../Models/Address');
+const Address = require('../models/address');
 
 const saveAddress = async (req, res) => {
   try {
