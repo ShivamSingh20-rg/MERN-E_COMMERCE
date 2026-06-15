@@ -70,9 +70,6 @@ export default function Productcard() {
             <h2 className="text-4xl font-black bg-gradient-to-r from-electric to-coral bg-clip-text text-transparent">
               Trending Rentals
             </h2>
-            <p className="mt-2 text-gray-500">
-              Premium fashion delivered in 30 minutes
-            </p>
           </>
         )}
       </div>
@@ -106,9 +103,7 @@ export default function Productcard() {
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
-                <div className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-ebony backdrop-blur-sm shadow-sm">
-                  ⚡ 30 Min Delivery
-                </div>
+                 
 
                 <div className="absolute bottom-3 right-3 rounded-full bg-white/90 p-2 opacity-0 backdrop-blur-sm transition group-hover:opacity-100">
                   <ShoppingBag size={18} className="text-ebony" />
