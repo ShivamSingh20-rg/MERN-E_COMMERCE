@@ -58,7 +58,7 @@ export default function ImageSlider() {
 
     const interval = setInterval(() => {
       nextSlide();
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [nextSlide, isPaused]);
