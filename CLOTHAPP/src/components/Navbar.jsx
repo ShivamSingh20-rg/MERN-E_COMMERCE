@@ -7,7 +7,6 @@ import Searchbar from "./Searchbar";
 import { useAuth } from "../Context/Authcontext";
 import Men from "./Men";
 import Women from "./Women";
-import Logo from './Logo'; 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
