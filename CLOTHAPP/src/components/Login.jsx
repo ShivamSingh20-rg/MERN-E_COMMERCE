@@ -1,117 +1,102 @@
-// src/pages/LoginPage.js
-import React, { useState } from "react";
+ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { X, ArrowRight } from "lucide-react";
-import {useAuth} from '../Context/Authcontext'
+import { ArrowRight, X } from "lucide-react";
+import { useAuth } from "../Context/Authcontext";
 
 export default function Login() {
-const {login}= useAuth();
-const [Errror,setErrror] = useState('')
-  const handdlelogin = async(e)=>{
-    e.preventDefault(); 
-  setErrror("");
-
-  try {
-   
-    console.log("Form values being sent:", formData);
-    await login(formData.email, formData.password,);
-    
-    // Smoothly route  
-  } catch (err) {
-    // This catches both local code execution bugs AND backend rejections!
-    console.error("Caught Form Submission Error:", err);
-    setErrror(err.message || "An unexpected configuration error occurred.");
-  }
-  }
+  const { login } = useAuth();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ email: "", password: "" });
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
-   
-  return (
-    <div className="min-h-screen flex items-center justify-center relative bg-gray-50 px-4 py-12">
-      {/* Background Decor Layer with a subtle blur effect */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] blur-[1px]" />
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-      {/* Main Focus Wrapper Box */}
-      <div className="w-full max-w-md bg-white p-8 border border-gray-200 relative z-10 shadow-sm">
-        {/* Cut / Exit Button (Redirects back to shop homepage) */}
+    try {
+      await login(formData.email, formData.password);
+      navigate("/");
+    } catch (err) {
+      console.error("Login failed:", err);
+      setError(err.message || "Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-lavender via-white to-blush px-4">
+      <div className="w-full max-w-md rounded-3xl border border-white/40 bg-white/80 p-8 shadow-2xl backdrop-blur-xl animate-scale-in">
         <button
           onClick={() => navigate("/")}
-          className="absolute top-4 right-4 text-gray-400 hover:text-black transition"
-          aria-label="Exit Login"
+          className="float-right text-gray-400 transition hover:text-ebony"
+          aria-label="Close login page"
         >
           <X size={20} />
         </button>
 
-        <div className="mb-8">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block mb-1">
+        <div className="mb-6 text-center">
+          <h2 className="bg-gradient-to-r from-electric to-coral bg-clip-text text-3xl font-black text-transparent">
             Welcome Back
-          </span>
-          <h2 className="text-2xl font-black uppercase tracking-wide font-serif text-black">
-            Account Log In
           </h2>
+          <p className="text-sm text-gray-500">Sign in to continue</p>
         </div>
 
-        <form onSubmit={handdlelogin} className="space-y-4">
-          <div>
-            <label className="block text-[10px] font-bold uppercase text-gray-500 mb-1">
-              Email Address
-            </label>
-            <input
-              type="email"
-              required
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-black transition"
-              placeholder="name@example.com"
-            />
+        {error && (
+          <div className="mb-4 rounded-lg bg-rose/20 p-2 text-sm text-rose">
+            {error}
           </div>
+        )}
 
-          <div>
-            <label className="block text-[10px] font-bold uppercase text-gray-500 mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              required
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-black transition"
-              placeholder="••••••••"
-            />
-          </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+            required
+            className="w-full rounded-xl border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-electric"
+          />
 
-          <div className="text-right">
-            <button
-              type="button"
-              className="text-[11px] text-gray-400 hover:text-black underline transition"
-            >
-              Forgot your password?
-            </button>
-          </div>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Password"
+            required
+            className="w-full rounded-xl border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-electric"
+          />
 
           <button
             type="submit"
-            className="w-full bg-black text-white py-4 mt-2 text-xs font-bold uppercase tracking-widest flex items-center justify-center space-x-2 hover:bg-gray-900 border border-black transition"
+            disabled={loading}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-electric to-coral py-3 font-bold text-white transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-70"
           >
-            <span>Sign In</span>
-            <ArrowRight size={14} />
+            {loading ? "Signing in..." : "Login"}
+            {!loading && <ArrowRight size={18} />}
           </button>
         </form>
 
-        <p className="text-center text-xs text-gray-500 mt-8 pt-4 border-t border-gray-100">
-          New to our collections?{" "}
-          <Link
-            to="/signup"
-            className="font-bold text-black underline hover:text-gray-700"
-          >
-            Create an account
+        <p className="mt-6 text-center text-sm">
+          New here?{" "}
+          <Link to="/signup" className="font-bold text-coral">
+            Create account
           </Link>
         </p>
       </div>
