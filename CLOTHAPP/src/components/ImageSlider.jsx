@@ -13,7 +13,7 @@ const slides = [
     description:
       "Fresh drops, bold colors, and premium everyday essentials made to move with you.",
     cta: "Shop Collection",
-    accent: "from-coral to-sunset",
+    accent: "from-[#FF3D5A] to-[#E879F9]",
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ const slides = [
     description:
       "Clean silhouettes and refined details designed for effortless daily styling.",
     cta: "Explore New Arrivals",
-    accent: "from-electric to-purple-haze",
+    accent: "from-[#5B4FF5] to-purple-500",
   },
   {
     id: 3,
@@ -37,13 +37,48 @@ const slides = [
     description:
       "Standout pieces with a modern edge, built to feel premium from the first wear.",
     cta: "Discover Styles",
-    accent: "from-teal to-mint",
+    accent: "from-teal-400 to-emerald-500",
   },
+  {
+    id: 4,
+    image:
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1800&auto=format",
+    title: "Urban Street",
+    highlight: "Culture",
+    badge: "Trending",
+    description:
+      "Oversized fits, cargo details, and the raw energy of modern streetwear.",
+    cta: "Shop Streetwear",
+    accent: "from-amber-400 to-orange-500",
+  },
+  {
+    id: 5,
+    image:
+      "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=1800&auto=format",
+    title: "Minimalist",
+    highlight: "Chic",
+    badge: "Premium",
+    description:
+      "Monochrome palettes and sharp tailoring for an understated, powerful look.",
+    cta: "View Premium",
+    accent: "from-gray-300 to-gray-100",
+  },
+  {
+    id: 6,
+    image:
+      "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=1800&auto=format",
+    title: "Vintage",
+    highlight: "Revival",
+    badge: "Exclusive",
+    description:
+      "Throwback silhouettes and retro washes making a massive comeback this season.",
+    cta: "Shop Vintage",
+    accent: "from-rose-400 to-red-500",
+  }
 ];
 
 export default function ImageSlider() {
   const [current, setCurrent] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
 
   const nextSlide = useCallback(() => {
     setCurrent((prev) => (prev + 1) % slides.length);
@@ -53,15 +88,14 @@ export default function ImageSlider() {
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
   }, []);
 
+  // Removed the isPaused dependency so it loops continuously every 3 seconds
   useEffect(() => {
-    if (isPaused) return;
-
     const interval = setInterval(() => {
       nextSlide();
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [nextSlide, isPaused]);
+  }, [nextSlide]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -75,11 +109,9 @@ export default function ImageSlider() {
 
   return (
     <section
-      className="relative h-screen min-h-[650px] w-full overflow-hidden bg-ebony"
+      className="relative h-screen min-h-[650px] w-full overflow-hidden bg-gray-950"
       aria-roledescription="carousel"
       aria-label="Homepage hero slider"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
     >
       {slides.map((slide, index) => {
         const isActive = index === current;
@@ -102,7 +134,6 @@ export default function ImageSlider() {
 
             <div className="absolute inset-0 bg-black/35" />
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
-            <div className="absolute inset-0 bg-hero-radial" />
           </div>
         );
       })}
