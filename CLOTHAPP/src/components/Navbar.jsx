@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Search, Heart, User, Menu, X, Sparkles, Zap, ShoppingBag } from "lucide-react";
+import { Search, Heart, User, Menu, X, Sparkles, Zap, ShoppingBag, Plus } from "lucide-react";
 import { useCart } from "./CartContext";
 import Avtar from "./Avtar";
 import Searchbar from "./Searchbar";
@@ -99,9 +99,7 @@ const Navbar = () => {
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-
           {/* ── CENTER LOGO (Fully Combined) ─────────────────────────────────── */}
-        {/* ── CENTER LOGO (Fully Combined) ─────────────────────────────────── */}
           <Link to="/" className="group flex items-center text-3xl font-black uppercase tracking-widest transition-transform hover:scale-105 duration-300">
             
             {/* 1. LEFT: Electric Bolt with Threads */}
@@ -121,18 +119,12 @@ const Navbar = () => {
 
             {/* 3. RIGHT: Constant Speeding Bag */}
             <div className="relative flex items-center justify-center ml-2 text-rose-500">
-              
-              {/* Bag constantly tilting and bumping */}
               <ShoppingBag className="w-6 h-6 stroke-[2.5] animate-bag-drive" />
-              
-              {/* Wind lines constantly shooting backward */}
               <div className="absolute right-full mr-1 flex flex-col gap-[4px]">
                 <span className="h-[2px] w-4 bg-rose-400 rounded-full animate-wind-1"></span>
                 <span className="h-[2px] w-3 bg-rose-400 rounded-full ml-1 animate-wind-2"></span>
               </div>
-              
             </div>
-
           </Link>
 
           {/* RIGHT — Tools & Cart */}
@@ -140,7 +132,7 @@ const Navbar = () => {
             
             <div className="relative flex items-center">
               {isSearchOpen && (
-                <div className="absolute right-12 top-1/2 z-50 w-64 -translate-y-1/2">
+                <div className="absolute right-12 top-1/2 z-16 w-16 -translate-y-1/2">
                   <Searchbar />
                 </div>
               )}
@@ -177,6 +169,7 @@ const Navbar = () => {
               <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#FF3D5A]" />
             </button>
 
+            {/* Cart Button */}
             <button
               onClick={() => navigate("/cart")}
               className="relative flex items-center gap-2 rounded-full bg-black px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-gray-800"
@@ -189,6 +182,17 @@ const Navbar = () => {
                 </span>
               )}
             </button>
+
+            {/* Add Product Button (Far right, matches Cart layout) */}
+            <Link
+              to="/adminadd"
+              className="relative flex items-center gap-2 rounded-full bg-[#5B4FF5] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-purple-600"
+            >
+              <Plus size={16} />
+              <span className="hidden sm:inline">Add Product</span>
+              <span className="sm:hidden">Add</span>
+            </Link>
+
           </div>
         </div>
 
