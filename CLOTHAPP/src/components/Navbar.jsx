@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+ import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Search, Heart, ShoppingBag, User, Menu, X, Sparkles } from "lucide-react";
 import { useCart } from "./CartContext";
@@ -20,7 +20,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
 
-  // Monitor scroll activity
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
@@ -29,7 +28,6 @@ const Navbar = () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
-
 
   const openMenu = (menu) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -50,18 +48,14 @@ const Navbar = () => {
         scrolled ? "bg-white/95 backdrop-blur-md shadow-md" : "bg-white"
       }`}
     >
-      {/* ── Promo Banner ─────────────────────────────────── */}
       <div className="w-full bg-gradient-to-r from-[#FF3D5A] via-[#5B4FF5] to-[#E879F9] px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.2em] text-white">
         <span>✨ Free Express Delivery on Orders Above ₹999</span>
         <span className="mx-2 opacity-60">|</span>
         <span>🌸 New Summer Drop — Shop Now</span>
       </div>
 
-      
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between md:h-[72px]">
-          
-          {/* LEFT — Desktop Link Targets */}
           <div className="hidden flex-1 items-center gap-6 md:flex h-full">
             {["men", "women"].map((cat) => (
               <div
@@ -93,7 +87,6 @@ const Navbar = () => {
             </Link>
           </div>
 
-           
           <button
             className="rounded-full p-2 text-gray-800 transition hover:bg-gray-100 md:hidden"
             onClick={() => setIsOpen((prev) => !prev)}
@@ -101,7 +94,7 @@ const Navbar = () => {
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
- 
+
           <Link
             to="/"
             className="text-2xl font-black tracking-[0.2em] md:text-3xl flex-shrink-0"
@@ -113,9 +106,8 @@ const Navbar = () => {
             <span className="text-[#FF3D5A]">ED</span>
           </Link>
 
-           <div className="flex flex-1 items-center justify-end gap-2">
-            
-             <div className="relative flex items-center">
+          <div className="flex flex-1 items-center justify-end gap-2">
+            <div className="relative flex items-center">
               {isSearchOpen && (
                 <div className="absolute right-12 top-1/2 z-50 w-64 -translate-y-1/2">
                   <Searchbar />
@@ -131,7 +123,7 @@ const Navbar = () => {
               </button>
             </div>
 
-             {user ? (
+            {user ? (
               <Avtar user={user} />
             ) : (
               <button
@@ -146,7 +138,7 @@ const Navbar = () => {
               </button>
             )}
 
-             <button
+            <button
               className="relative rounded-full p-2 transition hover:bg-rose-50"
               aria-label="Wishlist"
             >
@@ -154,7 +146,7 @@ const Navbar = () => {
               <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#FF3D5A]" />
             </button>
 
-             <button
+            <button
               onClick={() => navigate("/cart")}
               className="relative flex items-center gap-2 rounded-full bg-black px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-gray-800"
             >
@@ -169,7 +161,7 @@ const Navbar = () => {
           </div>
         </div>
 
-         {isOpen && (
+        {isOpen && (
           <div className="space-y-3 border-t border-gray-100 py-4 md:hidden">
             <Link
               to="/men"
@@ -196,7 +188,7 @@ const Navbar = () => {
         )}
       </nav>
 
-       {activeMenu && (
+      {activeMenu && (
         <div
           className="absolute left-0 top-full z-[999] w-full border-t border-gray-100 bg-white shadow-2xl"
           onMouseEnter={() => openMenu(activeMenu)}
