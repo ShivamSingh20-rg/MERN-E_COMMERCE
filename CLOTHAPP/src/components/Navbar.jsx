@@ -1,12 +1,13 @@
- import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Search, Heart, ShoppingBag, User, Menu, X, Sparkles } from "lucide-react";
+import { Search, Heart, User, Menu, X, Sparkles, Zap, ShoppingBag } from "lucide-react";
 import { useCart } from "./CartContext";
 import Avtar from "./Avtar";
 import Searchbar from "./Searchbar";
 import { useAuth } from "../Context/Authcontext";
 import Men from "./Men";
 import Women from "./Women";
+import Logo from './Logo'; 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +21,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
 
+  // Monitor scroll activity
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
@@ -48,6 +50,7 @@ const Navbar = () => {
         scrolled ? "bg-white/95 backdrop-blur-md shadow-md" : "bg-white"
       }`}
     >
+      {/* ── Promo Banner ─────────────────────────────────── */}
       <div className="w-full bg-gradient-to-r from-[#FF3D5A] via-[#5B4FF5] to-[#E879F9] px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.2em] text-white">
         <span>✨ Free Express Delivery on Orders Above ₹999</span>
         <span className="mx-2 opacity-60">|</span>
@@ -56,6 +59,8 @@ const Navbar = () => {
 
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between md:h-[72px]">
+          
+          {/* LEFT — Desktop Link Targets */}
           <div className="hidden flex-1 items-center gap-6 md:flex h-full">
             {["men", "women"].map((cat) => (
               <div
@@ -95,18 +100,45 @@ const Navbar = () => {
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          <Link
-            to="/"
-            className="text-2xl font-black tracking-[0.2em] md:text-3xl flex-shrink-0"
-            aria-label="Threaded home"
-          >
-            <span className="bg-gradient-to-r from-black to-[#5B4FF5] bg-clip-text text-transparent">
-              THREAD
-            </span>
-            <span className="text-[#FF3D5A]">ED</span>
+
+          {/* ── CENTER LOGO (Fully Combined) ─────────────────────────────────── */}
+        {/* ── CENTER LOGO (Fully Combined) ─────────────────────────────────── */}
+          <Link to="/" className="group flex items-center text-3xl font-black uppercase tracking-widest transition-transform hover:scale-105 duration-300">
+            
+            {/* 1. LEFT: Electric Bolt with Threads */}
+            <div className="relative flex items-center justify-center w-16 h-16 -ml-2 mr-1">
+              <Zap className="w-8 h-8 text-yellow-400 fill-yellow-400 relative z-10" />
+              <svg className="absolute inset-0 w-full h-full text-cyan-400 z-0 pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <path className="thread-1" d="M 40 40 L 15 15 L 25 5 L 0 0" />
+                <path className="thread-2" d="M 60 40 L 85 15 L 75 5 L 100 0" />
+                <path className="thread-3" d="M 40 60 L 15 85 L 5 75 L 0 100" />
+                <path className="thread-4" d="M 60 60 L 85 85 L 95 75 L 100 100" />
+              </svg>
+            </div>
+
+            {/* 2. CENTER: Brand Name */}
+            <span className="text-gray-950">SNAP</span>
+            <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-rose-500 bg-clip-text text-transparent italic pr-1">FLICK</span>
+
+            {/* 3. RIGHT: Constant Speeding Bag */}
+            <div className="relative flex items-center justify-center ml-2 text-rose-500">
+              
+              {/* Bag constantly tilting and bumping */}
+              <ShoppingBag className="w-6 h-6 stroke-[2.5] animate-bag-drive" />
+              
+              {/* Wind lines constantly shooting backward */}
+              <div className="absolute right-full mr-1 flex flex-col gap-[4px]">
+                <span className="h-[2px] w-4 bg-rose-400 rounded-full animate-wind-1"></span>
+                <span className="h-[2px] w-3 bg-rose-400 rounded-full ml-1 animate-wind-2"></span>
+              </div>
+              
+            </div>
+
           </Link>
 
+          {/* RIGHT — Tools & Cart */}
           <div className="flex flex-1 items-center justify-end gap-2">
+            
             <div className="relative flex items-center">
               {isSearchOpen && (
                 <div className="absolute right-12 top-1/2 z-50 w-64 -translate-y-1/2">
@@ -161,6 +193,7 @@ const Navbar = () => {
           </div>
         </div>
 
+        {/* Mobile Menu */}
         {isOpen && (
           <div className="space-y-3 border-t border-gray-100 py-4 md:hidden">
             <Link
@@ -188,6 +221,7 @@ const Navbar = () => {
         )}
       </nav>
 
+      {/* Mega Menu Dropdown */}
       {activeMenu && (
         <div
           className="absolute left-0 top-full z-[999] w-full border-t border-gray-100 bg-white shadow-2xl"
