@@ -43,7 +43,11 @@ export default function Productcard() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12">
+    /* FIX APPLIED HERE: 
+      Changed py-12 to pt-32 pb-12 so the content slides down 
+      below your new floating Navigation Bar! 
+    */
+    <div className="mx-auto max-w-7xl px-4 pt-32 pb-12">
       <div className="mb-12 text-center animate-fade-up">
         {searchQuery ? (
           <>
