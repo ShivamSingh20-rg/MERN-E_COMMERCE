@@ -28,13 +28,11 @@ const navigate = useNavigate()
     window.history.pushState(null, null, window.location.href);
     
     const handlePopState = () => {
-      // The moment they click "Back", intercept it and force them to the home catalog loop!
       navigate('/', { replace: true });
     };
 
     window.addEventListener('popstate', handlePopState);
     
-    // Clean up the event listener when the component unmounts
     return () => window.removeEventListener('popstate', handlePopState);
   }, [navigate]);
   
@@ -67,7 +65,6 @@ const navigate = useNavigate()
                onClick={() => navigate(`/orders/${order._id}`)} 
               className="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
                 
-                {/* Meta Summary Header Segment */}
                 <div className="bg-gray-50 border-b border-gray-100 p-4 flex flex-wrap gap-4 justify-between items-center text-xs">
                   <div className="space-y-1">
                     <p className="text-gray-400 font-bold uppercase">Order reference ID</p>
