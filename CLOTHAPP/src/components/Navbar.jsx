@@ -62,7 +62,7 @@ const Navbar = () => {
     >
       {/* ── Promo Banner ─────────────────────────────────── */}
       <div className="w-full bg-gradient-to-r from-[#FF3D5A] via-[#5B4FF5] to-[#E879F9] px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.2em] text-white">
-        <span>✨ Free Express Delivery on Orders Above ₹999</span>
+        <span></span>
         <span className="mx-2 opacity-60">|</span>
         <span>🌸 New Summer Drop — Shop Now</span>
       </div>
