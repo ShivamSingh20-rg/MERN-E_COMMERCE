@@ -61,11 +61,7 @@ const Navbar = () => {
       }`}
     >
       {/* ── Promo Banner ─────────────────────────────────── */}
-      <div className="w-full bg-gradient-to-r from-[#FF3D5A] via-[#5B4FF5] to-[#E879F9] px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.2em] text-white">
-        <span></span>
-        <span className="mx-2 opacity-60">|</span>
-        <span>🌸 New Summer Drop — Shop Now</span>
-      </div>
+       
 
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between md:h-[72px]">
