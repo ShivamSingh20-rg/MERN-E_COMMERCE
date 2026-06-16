@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Search, Heart, User, Menu, X, Sparkles, Zap, ShoppingBag, Plus } from "lucide-react";
 import { useCart } from "./CartContext";
 import Avtar from "./Avtar";
@@ -17,9 +17,18 @@ const Navbar = () => {
   const { user } = useAuth();
   const { getCartCount } = useCart();
   const cartCount = getCartCount();
+  
   const navigate = useNavigate();
+  const location = useLocation(); // 🎯 1. Grab current URL location
   const timeoutRef = useRef(null);
 
+  // 🎯 2. Automatically close mobile menus whenever the URL changes
+  useEffect(() => {
+    setIsOpen(false);
+    setActiveMenu(null);
+  }, [location.pathname, location.search]);
+
+  // Monitor scroll activity
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
