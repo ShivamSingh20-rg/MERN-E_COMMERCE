@@ -20,7 +20,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
 
-  // Monitor scroll activity
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
@@ -41,7 +40,10 @@ const Navbar = () => {
     }, 200);
   };
 
-  const closeMobileMenu = () => setIsOpen(false);
+  const closeMobileMenu = () => {
+    setIsOpen(false);
+    setActiveMenu(null);
+  };
 
   return (
     <header
@@ -69,7 +71,7 @@ const Navbar = () => {
                 onMouseLeave={closeMenu}
               >
                 <Link
-                  to={`/${cat}`}
+                  to={`/shop?search=${cat}`}
                   className={`relative px-2 py-1 text-sm font-bold uppercase tracking-wide transition-all duration-200 h-full flex items-center ${
                     activeMenu === cat ? "text-[#5B4FF5]" : "text-gray-700 hover:text-[#5B4FF5]"
                   }`}
@@ -99,12 +101,10 @@ const Navbar = () => {
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          {/* ── CENTER LOGO (Fully Combined) ─────────────────────────────────── */}
-          <Link to="/" className="group flex items-center text-3xl font-black uppercase tracking-widest transition-transform hover:scale-105 duration-300">
-            
-            {/* 1. LEFT: Electric Bolt with Threads */}
-            <div className="relative flex items-center justify-center w-16 h-16 -ml-2 mr-1">
-              <Zap className="w-8 h-8 text-yellow-400 fill-yellow-400 relative z-10" />
+          {/* ── CENTER LOGO ─────────────────────────────────── */}
+          <Link to="/" className="group flex items-center text-xl md:text-3xl font-black uppercase tracking-widest transition-transform hover:scale-105 duration-300">
+            <div className="relative flex items-center justify-center w-10 h-10 md:w-16 md:h-16 -ml-1 md:-ml-2 mr-1">
+              <Zap className="w-6 h-6 md:w-8 md:h-8 text-yellow-400 fill-yellow-400 relative z-10" />
               <svg className="absolute inset-0 w-full h-full text-cyan-400 z-0 pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <path className="thread-1" d="M 40 40 L 15 15 L 25 5 L 0 0" />
                 <path className="thread-2" d="M 60 40 L 85 15 L 75 5 L 100 0" />
@@ -112,27 +112,22 @@ const Navbar = () => {
                 <path className="thread-4" d="M 60 60 L 85 85 L 95 75 L 100 100" />
               </svg>
             </div>
-
-            {/* 2. CENTER: Brand Name */}
             <span className="text-gray-950">SNAP</span>
             <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-rose-500 bg-clip-text text-transparent italic pr-1">FLICK</span>
-
-            {/* 3. RIGHT: Constant Speeding Bag */}
-            <div className="relative flex items-center justify-center ml-2 text-rose-500">
-              <ShoppingBag className="w-6 h-6 stroke-[2.5] animate-bag-drive" />
+            <div className="relative flex items-center justify-center ml-1 md:ml-2 text-rose-500">
+              <ShoppingBag className="w-5 h-5 md:w-6 md:h-6 stroke-[2.5] animate-bag-drive" />
               <div className="absolute right-full mr-1 flex flex-col gap-[4px]">
-                <span className="h-[2px] w-4 bg-rose-400 rounded-full animate-wind-1"></span>
-                <span className="h-[2px] w-3 bg-rose-400 rounded-full ml-1 animate-wind-2"></span>
+                <span className="h-[2px] w-3 md:w-4 bg-rose-400 rounded-full animate-wind-1"></span>
+                <span className="h-[2px] w-2 md:w-3 bg-rose-400 rounded-full ml-1 animate-wind-2"></span>
               </div>
             </div>
           </Link>
 
           {/* RIGHT — Tools & Cart */}
           <div className="flex flex-1 items-center justify-end gap-2">
-            
             <div className="relative flex items-center">
               {isSearchOpen && (
-                <div className="absolute right-12 top-1/2 z-16 w-16 -translate-y-1/2">
+                <div className="absolute right-12 top-1/2 z-50 w-64 -translate-y-1/2">
                   <Searchbar />
                 </div>
               )}
@@ -152,7 +147,6 @@ const Navbar = () => {
               <button
                 onClick={() => navigate("/login")}
                 className="group flex items-center gap-1 rounded-full px-2 py-1 transition hover:bg-gray-100"
-                aria-label="Login"
               >
                 <User size={20} className="text-gray-600 transition group-hover:text-[#5B4FF5]" />
                 <span className="hidden text-sm font-semibold text-gray-700 transition group-hover:text-[#5B4FF5] lg:inline">
@@ -161,15 +155,11 @@ const Navbar = () => {
               </button>
             )}
 
-            <button
-              className="relative rounded-full p-2 transition hover:bg-rose-50"
-              aria-label="Wishlist"
-            >
+            <button className="relative rounded-full p-2 transition hover:bg-rose-50">
               <Heart size={20} className="text-[#FB7185]" />
               <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#FF3D5A]" />
             </button>
 
-            {/* Cart Button */}
             <button
               onClick={() => navigate("/cart")}
               className="relative flex items-center gap-2 rounded-full bg-black px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-gray-800"
@@ -183,7 +173,6 @@ const Navbar = () => {
               )}
             </button>
 
-            {/* Add Product Button (Far right, matches Cart layout) */}
             <Link
               to="/adminadd"
               className="relative flex items-center gap-2 rounded-full bg-[#5B4FF5] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-purple-600"
@@ -192,42 +181,62 @@ const Navbar = () => {
               <span className="hidden sm:inline">Add Product</span>
               <span className="sm:hidden">Add</span>
             </Link>
-
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* 🎯 THE NEW MOBILE ACCORDION MENU */}
         {isOpen && (
-          <div className="space-y-3 border-t border-gray-100 py-4 md:hidden">
-            <Link
-              to="/men"
-              onClick={closeMobileMenu}
-              className="block font-bold text-gray-800 transition hover:text-[#5B4FF5]"
-            >
-              Men
-            </Link>
-            <Link
-              to="/women"
-              onClick={closeMobileMenu}
-              className="block font-bold text-gray-800 transition hover:text-[#5B4FF5]"
-            >
-              Women
-            </Link>
-            <Link
-              to="/shop"
-              onClick={closeMobileMenu}
-              className="block font-bold text-[#FF3D5A] transition hover:opacity-80"
-            >
-              New Arrivals ✨
-            </Link>
+          <div className="absolute left-0 top-full w-full max-h-[85vh] overflow-y-auto border-t border-gray-100 bg-white px-6 py-4 shadow-lg md:hidden">
+            
+            {/* MEN ACCORDION */}
+            <div className="border-b border-gray-50 py-3">
+              <button
+                onClick={() => setActiveMenu(activeMenu === "men" ? null : "men")}
+                className="flex w-full items-center justify-between font-bold text-gray-800 transition hover:text-[#5B4FF5]"
+              >
+                Men
+                <span className="text-xl text-gray-400">{activeMenu === "men" ? "−" : "+"}</span>
+              </button>
+              {activeMenu === "men" && (
+                <div className="mt-4 pb-4">
+                  <Men />
+                </div>
+              )}
+            </div>
+
+            {/* WOMEN ACCORDION */}
+            <div className="border-b border-gray-50 py-3">
+              <button
+                onClick={() => setActiveMenu(activeMenu === "women" ? null : "women")}
+                className="flex w-full items-center justify-between font-bold text-gray-800 transition hover:text-[#5B4FF5]"
+              >
+                Women
+                <span className="text-xl text-gray-400">{activeMenu === "women" ? "−" : "+"}</span>
+              </button>
+              {activeMenu === "women" && (
+                <div className="mt-4 pb-4">
+                  <Women />
+                </div>
+              )}
+            </div>
+
+            <div className="py-4">
+              <Link
+                to="/shop"
+                onClick={closeMobileMenu}
+                className="block font-bold text-[#FF3D5A] transition hover:opacity-80"
+              >
+                New Arrivals ✨
+              </Link>
+            </div>
           </div>
         )}
       </nav>
 
-      {/* Mega Menu Dropdown */}
-      {activeMenu && (
+      {/* 🎯 Desktop-Only Mega Menu Dropdown */}
+      {activeMenu && !isOpen && (
         <div
-          className="absolute left-0 top-full z-[999] w-full border-t border-gray-100 bg-white shadow-2xl"
+          className="absolute left-0 top-full z-[999] w-full border-t border-gray-100 bg-white shadow-2xl hidden md:block"
           onMouseEnter={() => openMenu(activeMenu)}
           onMouseLeave={closeMenu}
         >
