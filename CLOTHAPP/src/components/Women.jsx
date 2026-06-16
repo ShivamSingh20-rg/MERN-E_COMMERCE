@@ -44,7 +44,7 @@ const WOMEN_DATA = {
 export default function Women() {
   return (
     <div className="absolute top-20 left-0 w-full bg-white border-b border-gray-200 shadow-2xl z-50 animate-fade-in">
-      <div className="max-w-7xl mx-auto grid grid-cols-5 gap-8 px-8 py-12">
+    <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-5 gap-8 px-4 lg:px-8 py-8 lg:py-12">
         
         {WOMEN_DATA.sections.map((section, idx) => (
           <div key={idx} className="flex flex-col space-y-4">
