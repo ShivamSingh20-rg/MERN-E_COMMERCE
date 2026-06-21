@@ -1,6 +1,6 @@
- import React, { useEffect, useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Search, Heart, ShoppingBag, User, Menu, X, Sparkles } from "lucide-react";
+import React, { useEffect, useState, useRef } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Search, Heart, User, Menu, X, Sparkles, Zap, ShoppingBag, Plus } from "lucide-react";
 import { useCart } from "./CartContext";
 import Avtar from "./Avtar";
 import Searchbar from "./Searchbar";
@@ -17,9 +17,18 @@ const Navbar = () => {
   const { user } = useAuth();
   const { getCartCount } = useCart();
   const cartCount = getCartCount();
+  
   const navigate = useNavigate();
+  const location = useLocation(); // 🎯 1. Grab current URL location
   const timeoutRef = useRef(null);
 
+  // 🎯 2. Automatically close mobile menus whenever the URL changes
+  useEffect(() => {
+    setIsOpen(false);
+    setActiveMenu(null);
+  }, [location.pathname, location.search]);
+
+  // Monitor scroll activity
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
@@ -40,7 +49,10 @@ const Navbar = () => {
     }, 200);
   };
 
-  const closeMobileMenu = () => setIsOpen(false);
+  const closeMobileMenu = () => {
+    setIsOpen(false);
+    setActiveMenu(null);
+  };
 
   return (
     <header
@@ -48,14 +60,13 @@ const Navbar = () => {
         scrolled ? "bg-white/95 backdrop-blur-md shadow-md" : "bg-white"
       }`}
     >
-      <div className="w-full bg-gradient-to-r from-[#FF3D5A] via-[#5B4FF5] to-[#E879F9] px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.2em] text-white">
-        <span>✨ Free Express Delivery on Orders Above ₹999</span>
-        <span className="mx-2 opacity-60">|</span>
-        <span>🌸 New Summer Drop — Shop Now</span>
-      </div>
+      {/* ── Promo Banner ─────────────────────────────────── */}
+       
 
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between md:h-[72px]">
+          
+          {/* LEFT — Desktop Link Targets */}
           <div className="hidden flex-1 items-center gap-6 md:flex h-full">
             {["men", "women"].map((cat) => (
               <div
@@ -65,7 +76,7 @@ const Navbar = () => {
                 onMouseLeave={closeMenu}
               >
                 <Link
-                  to={`/${cat}`}
+                  to={`/shop?search=${cat}`}
                   className={`relative px-2 py-1 text-sm font-bold uppercase tracking-wide transition-all duration-200 h-full flex items-center ${
                     activeMenu === cat ? "text-[#5B4FF5]" : "text-gray-700 hover:text-[#5B4FF5]"
                   }`}
@@ -95,17 +106,29 @@ const Navbar = () => {
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          <Link
-            to="/"
-            className="text-2xl font-black tracking-[0.2em] md:text-3xl flex-shrink-0"
-            aria-label="Threaded home"
-          >
-            <span className="bg-gradient-to-r from-black to-[#5B4FF5] bg-clip-text text-transparent">
-              THREAD
-            </span>
-            <span className="text-[#FF3D5A]">ED</span>
+          {/* ── CENTER LOGO ─────────────────────────────────── */}
+          <Link to="/" className="group flex items-center text-xl md:text-3xl font-black uppercase tracking-widest transition-transform hover:scale-105 duration-300">
+            <div className="relative flex items-center justify-center w-10 h-10 md:w-16 md:h-16 -ml-1 md:-ml-2 mr-1">
+              <Zap className="w-6 h-6 md:w-8 md:h-8 text-yellow-400 fill-yellow-400 relative z-10" />
+              <svg className="absolute inset-0 w-full h-full text-cyan-400 z-0 pointer-events-none" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <path className="thread-1" d="M 40 40 L 15 15 L 25 5 L 0 0" />
+                <path className="thread-2" d="M 60 40 L 85 15 L 75 5 L 100 0" />
+                <path className="thread-3" d="M 40 60 L 15 85 L 5 75 L 0 100" />
+                <path className="thread-4" d="M 60 60 L 85 85 L 95 75 L 100 100" />
+              </svg>
+            </div>
+            <span className="text-gray-950">SNAP</span>
+            <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-rose-500 bg-clip-text text-transparent italic pr-1">FLICK</span>
+            <div className="relative flex items-center justify-center ml-1 md:ml-2 text-rose-500">
+              <ShoppingBag className="w-5 h-5 md:w-6 md:h-6 stroke-[2.5] animate-bag-drive" />
+              <div className="absolute right-full mr-1 flex flex-col gap-[4px]">
+                <span className="h-[2px] w-3 md:w-4 bg-rose-400 rounded-full animate-wind-1"></span>
+                <span className="h-[2px] w-2 md:w-3 bg-rose-400 rounded-full ml-1 animate-wind-2"></span>
+              </div>
+            </div>
           </Link>
 
+          {/* RIGHT — Tools & Cart */}
           <div className="flex flex-1 items-center justify-end gap-2">
             <div className="relative flex items-center">
               {isSearchOpen && (
@@ -129,7 +152,6 @@ const Navbar = () => {
               <button
                 onClick={() => navigate("/login")}
                 className="group flex items-center gap-1 rounded-full px-2 py-1 transition hover:bg-gray-100"
-                aria-label="Login"
               >
                 <User size={20} className="text-gray-600 transition group-hover:text-[#5B4FF5]" />
                 <span className="hidden text-sm font-semibold text-gray-700 transition group-hover:text-[#5B4FF5] lg:inline">
@@ -138,10 +160,7 @@ const Navbar = () => {
               </button>
             )}
 
-            <button
-              className="relative rounded-full p-2 transition hover:bg-rose-50"
-              aria-label="Wishlist"
-            >
+            <button className="relative rounded-full p-2 transition hover:bg-rose-50">
               <Heart size={20} className="text-[#FB7185]" />
               <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[#FF3D5A]" />
             </button>
@@ -158,39 +177,71 @@ const Navbar = () => {
                 </span>
               )}
             </button>
+
+            <Link
+              to="/adminadd"
+              className="relative flex items-center gap-2 rounded-full bg-[#5B4FF5] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-purple-600"
+            >
+              <Plus size={16} />
+              <span className="hidden sm:inline">Add Product</span>
+              <span className="sm:hidden">Add</span>
+            </Link>
           </div>
         </div>
 
+        {/* 🎯 THE NEW MOBILE ACCORDION MENU */}
         {isOpen && (
-          <div className="space-y-3 border-t border-gray-100 py-4 md:hidden">
-            <Link
-              to="/men"
-              onClick={closeMobileMenu}
-              className="block font-bold text-gray-800 transition hover:text-[#5B4FF5]"
-            >
-              Men
-            </Link>
-            <Link
-              to="/women"
-              onClick={closeMobileMenu}
-              className="block font-bold text-gray-800 transition hover:text-[#5B4FF5]"
-            >
-              Women
-            </Link>
-            <Link
-              to="/shop"
-              onClick={closeMobileMenu}
-              className="block font-bold text-[#FF3D5A] transition hover:opacity-80"
-            >
-              New Arrivals ✨
-            </Link>
+          <div className="absolute left-0 top-full w-full max-h-[85vh] overflow-y-auto border-t border-gray-100 bg-white px-6 py-4 shadow-lg md:hidden">
+            
+            {/* MEN ACCORDION */}
+            <div className="border-b border-gray-50 py-3">
+              <button
+                onClick={() => setActiveMenu(activeMenu === "men" ? null : "men")}
+                className="flex w-full items-center justify-between font-bold text-gray-800 transition hover:text-[#5B4FF5]"
+              >
+                Men
+                <span className="text-xl text-gray-400">{activeMenu === "men" ? "−" : "+"}</span>
+              </button>
+              {activeMenu === "men" && (
+                <div className="mt-4 pb-4">
+                  <Men />
+                </div>
+              )}
+            </div>
+
+            {/* WOMEN ACCORDION */}
+            <div className="border-b border-gray-50 py-3">
+              <button
+                onClick={() => setActiveMenu(activeMenu === "women" ? null : "women")}
+                className="flex w-full items-center justify-between font-bold text-gray-800 transition hover:text-[#5B4FF5]"
+              >
+                Women
+                <span className="text-xl text-gray-400">{activeMenu === "women" ? "−" : "+"}</span>
+              </button>
+              {activeMenu === "women" && (
+                <div className="mt-4 pb-4">
+                  <Women />
+                </div>
+              )}
+            </div>
+
+            <div className="py-4">
+              <Link
+                to="/shop"
+                onClick={closeMobileMenu}
+                className="block font-bold text-[#FF3D5A] transition hover:opacity-80"
+              >
+                New Arrivals ✨
+              </Link>
+            </div>
           </div>
         )}
       </nav>
 
-      {activeMenu && (
+      {/* 🎯 Desktop-Only Mega Menu Dropdown */}
+      {activeMenu && !isOpen && (
         <div
-          className="absolute left-0 top-full z-[999] w-full border-t border-gray-100 bg-white shadow-2xl"
+          className="absolute left-0 top-full z-[999] w-full border-t border-gray-100 bg-white shadow-2xl hidden md:block"
           onMouseEnter={() => openMenu(activeMenu)}
           onMouseLeave={closeMenu}
         >
