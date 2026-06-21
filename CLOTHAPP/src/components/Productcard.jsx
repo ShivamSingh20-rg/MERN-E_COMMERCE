@@ -135,7 +135,7 @@ export default function Productcard() {
                   </div>
 
                   <button className="rounded-full bg-ebony px-5 py-2.5 text-sm font-bold text-white transition hover:bg-coral">
-                    View Item
+                    Buy Now
                   </button>
                 </div>
               </div>

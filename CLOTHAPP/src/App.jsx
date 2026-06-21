@@ -7,7 +7,7 @@ import Cartpage from './components/Cartpage';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Authprovider from '../src/Context/Authcontext';
-import Productadd from './admin/Productadd'
+// import Productadd from './admin/Productadd'
 import CartPorvider from'../src/components/CartContext'
 import Productlist from './components/Productlist'
 import Deliveryaddress from '../src/components/Deliveryaddress'
@@ -31,7 +31,7 @@ export default function App() {
               <Route path="/cart" element={<Cartpage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/adminadd" element={<Productadd/>} />
+              {/* <Route path="/adminadd" element={<Productadd/>} /> */}
               <Route path="/category/:subCategorySlug" element={<Productlist />} />
               <Route path="/checkout/address" element={<Deliveryaddress />} />
               <Route path="/checkout/orders" element={<Order />} />
