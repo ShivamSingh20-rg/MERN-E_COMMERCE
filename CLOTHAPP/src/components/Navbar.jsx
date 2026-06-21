@@ -178,14 +178,6 @@ const Navbar = () => {
               )}
             </button>
 
-            <Link
-              to="/adminadd"
-              className="relative flex items-center gap-2 rounded-full bg-[#5B4FF5] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-purple-600"
-            >
-              <Plus size={16} />
-              <span className="hidden sm:inline">Add Product</span>
-              <span className="sm:hidden">Add</span>
-            </Link>
           </div>
         </div>
 
