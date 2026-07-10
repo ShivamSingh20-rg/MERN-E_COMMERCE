@@ -1,4 +1,4 @@
- # Snapflick | Quick-Commerce Fashion Rental
+ # Snapflick | Full-Stack E-Commerce Platform
 
 ![MERN Stack](https://img.shields.io/badge/Stack-MERN-blue?style=for-the-badge&logo=react)
 ![TailwindCSS](https://img.shields.io/badge/Style-Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css)
