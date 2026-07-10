@@ -5,19 +5,28 @@
 ![Vite](https://img.shields.io/badge/Bundler-Vite-646CFF?style=for-the-badge&logo=vite)
 ![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
 
-**Snapflick** is a full-stack, quick-commerce fashion rental platform designed to deliver premium clothing to users in under 30 minutes. Built with a modern mobile-first approach, it features seamless navigation, advanced product filtering, and a fully functional shopping cart and checkout pipeline.
+**Snapflick** is a modern, high-performance full-stack e-commerce solution designed to provide users with a seamless online shopping experience. Built using the MERN stack (MongoDB, Express, React, Node.js) and styled with Tailwind CSS, the platform delivers a fast, responsive, and intuitive interface on both mobile and desktop screens. It handles everything from secure product browsing and dynamic shopping cart manipulations to secure user authentication and reliable checkouts.
 
 ---
 
-## Key Features
+## ✨ Key Features
 
-* **Quick-Commerce Rental Model:** Specifically architected to handle time-sensitive fashion rentals with real-time inventory tracking.
-* **Mobile-First Responsive UI:** Fully responsive design utilizing Tailwind CSS, featuring custom mobile accordions and adaptive grids.
-* **Secure Authentication:** User login and registration powered by JSON Web Tokens (JWT) and bcrypt password hashing.
-* **Dynamic Cart & Checkout:** State-managed shopping bag with address management and dynamic total calculations.
-* **Advanced Routing:** Seamless client-side routing via `react-router-dom` with interactive mega-menus and search parameters.
-* **RESTful API:** Robust Express.js backend handling user data, product catalogs, and order processing.
+### 👤 User Authentication & Security
+* **Secure Signup & Login:** Managed via JSON Web Tokens (JWT) with HTTP-only cookies and bcrypt password hashing.
+* **Protected Routes:** Restricted profile navigation, checkout operations, and administration panels based on authorization scopes.
 
+### 🛒 Dynamic Shopping Experience
+* **Advanced Filtering & Search:** Instantly browse items by categories, price boundaries, rankings, or keywords.
+* **Persistent Shopping Cart:** Seamlessly append, update, or remove items with state synchronized across browser refreshes.
+* **Detailed Product Views:** View extensive documentation, clear pricing, and image carousels for individual items.
+
+### 💳 Checkout & Order Processing
+* **Payment Gateway Integration:** Secure payment pipelines processing sandbox test credits safely.
+* **Order Summaries & History:** Access individual dashboards detailing modern transaction proofs and order histories.
+
+### 📊 Administrative Control Center (Admin Panel)
+* **Inventory Tracking:** Direct CRUD management utilities enabling swift product addition, updates, or removals.
+* **User & Analytics Monitoring:** Review active user profiles and general platform metrics efficiently.
 ---
 
 ## Tech Stack
